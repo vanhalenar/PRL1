@@ -18,7 +18,7 @@ dd if=/dev/random bs=1 count=$1 of=numbers 2>/dev/null
 
 # spusteni aplikace (oversubscribe - vice procesu nez fyzicky k dispozici)
 # mpirun --oversubscribe --prefix /usr/local/share/OpenMPI -np $1 oets
-mpirun --oversubscribe --prefix /usr/local/share/OpenMPI -np 1 oets
+mpirun --oversubscribe --prefix /usr/local/share/OpenMPI -np $1 oets
 
 # uklid
 rm -f oets numbers
