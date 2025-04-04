@@ -1,3 +1,9 @@
+/*
+VUT FIT - PRL projekt 1
+Timotej Halenár - xhalen00
+3.4.2024
+*/
+
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
@@ -80,8 +86,6 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-
-		// MPI_Barrier(MPI_COMM_WORLD); // not sure
 
 		// 1-2, 3-4, 5-6
 		// send your number to neighbor
