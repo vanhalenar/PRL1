@@ -126,6 +126,7 @@ int main(int argc, char *argv[])
 
 	// MPI_Barrier(MPI_COMM_WORLD); we don't need this one either??
 
+	// get sorted numbers and print them from one process
 	MPI_Gather(&num, 1, MPI_UINT8_T, allNums, 1, MPI_UINT8_T, 0, MPI_COMM_WORLD);
 
 	if (rank == 0)
