@@ -50,25 +50,16 @@ int main(int argc, char *argv[])
 
 	for (int k = 1; k < size; k++)
 	{
-		// 0-1, 2-3, 4-5, 6-7
-		// send your number to neighbor
-		for (int i = 0; i <= 2 * (size / 2) - 1; i += 2)
-		{
-			if (i == rank)
-				MPI_Send(&num, 1, MPI_UINT8_T, rank + 1, 0, MPI_COMM_WORLD);
-		}
-		for (int i = 1; i <= 2 * (size / 2) - 1; i += 2)
-		{
-			if (i == rank)
-				MPI_Send(&num, 1, MPI_UINT8_T, rank - 1, 0, MPI_COMM_WORLD);
-		}
 
-		// recieve number from neighbor
+		// 0-1, 2-3, 4-5, 6-7
 		for (int i = 0; i <= 2 * (size / 2) - 1; i += 2)
 		{
 			if (i == rank)
 			{
-				MPI_Recv(&num2, 1, MPI_UINT8_T, rank + 1, 0, MPI_COMM_WORLD, &status);
+				MPI_Sendrecv(
+					&num, 1, MPI_UINT8_T, rank + 1, 0,
+					&num2, 1, MPI_UINT8_T, rank + 1, 0,
+					MPI_COMM_WORLD, &status);
 				if (num > num2)
 				{
 					num = num2;
@@ -79,7 +70,10 @@ int main(int argc, char *argv[])
 		{
 			if (i == rank)
 			{
-				MPI_Recv(&num2, 1, MPI_UINT8_T, rank - 1, 0, MPI_COMM_WORLD, &status);
+				MPI_Sendrecv(
+					&num, 1, MPI_UINT8_T, rank - 1, 0,
+					&num2, 1, MPI_UINT8_T, rank - 1, 0,
+					MPI_COMM_WORLD, &status);
 				if (num < num2)
 				{
 					num = num2;
@@ -88,24 +82,14 @@ int main(int argc, char *argv[])
 		}
 
 		// 1-2, 3-4, 5-6
-		// send your number to neighbor
-		for (int i = 1; i < 2 * ((size - 1) / 2); i += 2)
-		{
-			if (i == rank)
-				MPI_Send(&num, 1, MPI_UINT8_T, rank + 1, 0, MPI_COMM_WORLD);
-		}
-		for (int i = 2; i <= 2 * ((size - 1) / 2); i += 2)
-		{
-			if (i == rank)
-				MPI_Send(&num, 1, MPI_UINT8_T, rank - 1, 0, MPI_COMM_WORLD);
-		}
-
-		// recieve number from neighbor
 		for (int i = 1; i < 2 * ((size - 1) / 2); i += 2)
 		{
 			if (i == rank)
 			{
-				MPI_Recv(&num2, 1, MPI_UINT8_T, rank + 1, 0, MPI_COMM_WORLD, &status);
+				MPI_Sendrecv(
+					&num, 1, MPI_UINT8_T, rank + 1, 0,
+					&num2, 1, MPI_UINT8_T, rank + 1, 0,
+					MPI_COMM_WORLD, &status);
 				if (num > num2)
 				{
 					num = num2;
@@ -116,7 +100,10 @@ int main(int argc, char *argv[])
 		{
 			if (i == rank)
 			{
-				MPI_Recv(&num2, 1, MPI_UINT8_T, rank - 1, 0, MPI_COMM_WORLD, &status);
+				MPI_Sendrecv(
+					&num, 1, MPI_UINT8_T, rank - 1, 0,
+					&num2, 1, MPI_UINT8_T, rank - 1, 0,
+					MPI_COMM_WORLD, &status);
 				if (num < num2)
 				{
 					num = num2;
