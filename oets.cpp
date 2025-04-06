@@ -50,15 +50,17 @@ int main(int argc, char *argv[])
 		printf("\n");
 	}
 
-	// MPI_Barrier(MPI_COMM_WORLD); I guess we don't need this one?
-
 	// var for recieving numbers from neighbors
 	u_int8_t num2;
 
-	// main algorithm loop
-	for (int k = 1; k < size; k++)
-	{
+	// get the number of iterations
+	// only need to go up to n/2 because we're doing two switches per round
+	// need to do (size + 1)/2 to account for odd numbers
+	int lim = (size + 1) / 2;
 
+	// main algorithm loop
+	for (int k = 1; k <= lim; k++)
+	{
 		// 0-1, 2-3, 4-5, 6-7
 		// 'even' phase (but actually odd phase because it goes from 0)
 		// exchange number with above neighbor
@@ -123,8 +125,6 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-
-	// MPI_Barrier(MPI_COMM_WORLD); we don't need this one either??
 
 	// get sorted numbers and print them from one process
 	MPI_Gather(&num, 1, MPI_UINT8_T, allNums, 1, MPI_UINT8_T, 0, MPI_COMM_WORLD);

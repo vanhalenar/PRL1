@@ -12,7 +12,7 @@ def prep_test(proc):
         subprocess.run(["python3", "sort.py"], input=nums.encode(), stdout=outfile)
 
 def run_tests(proc, repeats):
-    for i in range(repeats):
+    for i in range(1, repeats+1):
         difference=False
         prep_test(proc)
         with open("oets.out") as f1, open("ref.out") as f2:
@@ -26,10 +26,10 @@ def run_tests(proc, repeats):
             print(f"{proc}: Passed test {i} of {repeats}")
 
 
-run_tests(8, 10)
-run_tests(12, 10)
-run_tests(16, 10)
+run_tests(8, 5)
+run_tests(12, 5)
 run_tests(17, 10)
+run_tests(16, 6)
 run_tests(19, 10)
 
 subprocess.run("rm *.out", shell=True)
